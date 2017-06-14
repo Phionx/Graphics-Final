@@ -3,6 +3,7 @@
 *.png
 *.jpg
 *.jpeg
+*.gif
 
 #temp files
 *~
