@@ -8,19 +8,20 @@ def scanline_convert(polygons, i, screen, zbuffer, color):
     p = sorted(polygons[i:i+3], key=lambda t: t[1])
 
     if (p[2][1] - p[0][1]) != 0:
-        i0 = (p[2][0] - p[0][0])/(p[2][1] - p[0][1])
+        i0 = (p[2][0] - p[0][0]) / (p[2][1] - p[0][1])
     else:
         i0 = 0
     if (p[1][1] - p[0][1]) != 0:
-        i1 = (p[1][0] - p[0][0])/(p[1][1] - p[0][1])
+        i1 = (p[1][0] - p[0][0]) / (p[1][1] - p[0][1])
     else:
         i1 = 0
     if (p[2][1] - p[1][1]) != 0:
-        i2 = (p[2][0] - p[1][0])/(p[2][1] - p[1][1])
+        i2 = (p[2][0] - p[1][0]) / (p[2][1] - p[1][1])
     else:
         i2 = 0
 
-    xi = xf = p[0][0]
+    xi = p[0][0]
+    xf = p[0][0]
     if p[0][1] == p[1][1]:
         xf = p[1][0]
     y = p[0][1]
@@ -29,31 +30,30 @@ def scanline_convert(polygons, i, screen, zbuffer, color):
         z_step = 1.0 / (p[1][2] - p[0][2])
     else:
         z_step = 0
-    
 
     while y < p[1][1]:
-        #draw_line(int(xi), int(y), int(z), int(xf), int(y), int(z), screen, zbuffer, color)
+        draw_line(int(xi), int(y), int(z), int(xf), int(y), int(z), screen, zbuffer, color)
         xi += i0
         xf += i1
         y += 1
         z += z_step
 
-    xi -= xi
+    xi -= i0
     xf = p[1][0]
     y = p[1][1]
-    Z = p[1][2]
+    z = p[1][2]
     if (p[2][2] - p[1][2]) != 0:
         z_step = 1.0 / (p[2][2] - p[1][2])
     else:
         z_step = 0
 
     while y < p[2][1]:
-        #draw_line(int(xi), int(y), int(z), int(xf), int(y), int(z), screen, zbuffer, color)
+        draw_line(int(xi), int(y), int(z), int(xf), int(y), int(z), screen, zbuffer, color)
         xi += i0
         xf += i2
         y += 1
         z += z_step
-
+    
 
 #Lighting
 def lighting(normal, info, lighting_type):
